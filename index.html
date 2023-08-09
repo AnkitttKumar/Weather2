@@ -1,0 +1,56 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300&family=Encode+Sans+Semi+Condensed:wght@300&family=Kanit:ital,wght@1,200&family=Lato&family=Open+Sans:wght@300&family=Piazzolla:wght@200;300;400;900&family=Poppins&family=Roboto+Slab:wght@200;300;400&family=Source+Code+Pro:wght@300&family=Ubuntu&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2><i class="fa fa-map-marker"></i><span id="location"></span></h2>
+        <h6 id="weather"></h6>
+        <h4><span id="temp"></span><sup>o</sup>C</h4>
+        <img src="" alt="" id="icon" />
+        <button class="refresh" onclick="Window.location.reload()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+      link =
+        "https://api.openweathermap.org/data/2.5/weather?q=Allahabad&appid=06090d7ff04c7d7b0b762bd7c83df98b";
+      var request = new XMLHttpRequest();
+      request.open("GET", link, true);
+      request.onload = function () {
+        var obj = JSON.parse(this.response);
+        console.log(obj);
+        document.getElementById("weather").innerHTML =
+          obj.weather[0].description;
+        document.getElementById("location").innerHTML = obj.name;
+        document.getElementById("temp").innerHTML = Math.round(
+          obj.main.temp - 273.15
+        );
+        document.getElementById("icon").src =
+          "https://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
+      };
+      if (request.status >= 200 && request.status < 400) {
+        var temp = obj.main.temp;
+      } else {
+        console.log("City not found");
+      }
+      request.send();
+    </script>
+  </body>
+</html>
